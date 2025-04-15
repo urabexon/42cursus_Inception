@@ -30,6 +30,21 @@ services:
       - ssl_certs:/etc/nginx/ssl
     networks:
       - inception_net
+  
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception_net
 
 volumes:
   db_data:
@@ -37,6 +52,22 @@ volumes:
     driver: local
     driver_opts:
       device: ${HOME}/data/db_data
+      o: bind
+      type: none
+
+  wp_data:
+    name: wp_data
+    driver: local
+    driver_opts:
+      device: ${HOME}/data/wp_data
+      o: bind
+      type: none
+
+  ssl_certs:
+    name: ssl_certs
+    driver: local
+    driver_opts:
+      device: ${HOME}/data/ssl_certs
       o: bind
       type: none
 
