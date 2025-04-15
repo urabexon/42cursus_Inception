@@ -17,3 +17,7 @@ services:
       - ssl_certs:/etc/nginx/ssl
     networks:
       - inception_net
+
+networks:
+  inception_net:
+    driver: bridge
