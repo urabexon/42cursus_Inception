@@ -6,7 +6,7 @@
 #    By: urabex <urabex@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/12 18:56:31 by hurabe            #+#    #+#              #
-#    Updated: 2025/04/15 16:18:07 by urabex           ###   ########.fr        #
+#    Updated: 2025/04/15 19:44:43 by urabex           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ RUN chown -R mysql:mysql /var/run/mysqld
 # MariaDB用設定ファイルと初期化スクリプトコピー
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 COPY ./tools/init.sh /docker-entrypoint-initdb.d/init.sh
+# init.shに実行権限を付与する
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 
 # スクリプト実行
 ENTRYPOINT ["/docker-entrypoint-initdb.d/init.sh"]
