@@ -1,6 +1,19 @@
 # version: '3'
 
 services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - inception_net
+
   nginx:
     container_name: nginx
     build:
@@ -17,6 +30,15 @@ services:
       - ssl_certs:/etc/nginx/ssl
     networks:
       - inception_net
+
+volumes:
+  dp_data:
+    name: db_data
+    driver: local
+    driver_opts:
+      device: ${HOME}/data/db_data
+      o: bind
+      type: none
 
 networks:
   inception_net:
