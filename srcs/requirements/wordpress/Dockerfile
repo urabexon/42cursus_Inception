@@ -6,7 +6,7 @@
 #    By: urabex <urabex@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/12 18:57:06 by hurabe            #+#    #+#              #
-#    Updated: 2025/04/15 18:17:09 by urabex           ###   ########.fr        #
+#    Updated: 2025/04/15 20:18:57 by urabex           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,9 @@ RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
 
 # PHP-FPM設定を上書きする
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+# /run/php がないと PHP-FPM が起動できないため、事前に作成
+RUN mkdir -p /run/php
 
 # 起動スクリプトを追加する
 COPY ./tools/init.sh /docker-entrypoint.d/init.sh
